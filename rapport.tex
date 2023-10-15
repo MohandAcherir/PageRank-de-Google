@@ -1,0 +1,51 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+Utilisation du Pagerank précédent pour initialiser un nouveau calcul-graphe attachement préférentiel
+\\
+\\
+Chaque mois, la distribution stationnaire de la matrice $G$ de PageRank est calculée pour prendre en compte les modifications du graphe du web.
+
+La méthode d'initialisation de base consiste à commencer l'algorithme des puissances sur le vecteur $e/n$, soit une répartition équidistribuée des notes pour chaque page.
+\\
+Ce projet vise à étudier l'initialisation proposée suivante :
+\\
+- Prendre le vecteur de notes du mois précedent
+\\
+- Pour chaque nouveau sommet sa note est initialisée à 0
+\\
+\\
+L'objectif de cette méthode est de réutiliser les notes du mois précedent pour initialiser le vecteur de notes.
+La croissance du graphe du web étant généralement inférieure à 10\%, on peut considérer que les notes du mois précedent soient assez pertinentes.
+\\ 
+L'ajout de nouveaux arcs dans le graphe se fait dans un contexte d'attachement préférentiel, c'est à dire que les nouveaux sommets pointent vers les sommets de plus haut degré.
+\\
+Nous avons choisi de générer les nouveaux arcs de la manière suivante :
+\\
+- On fixe le degré sortant des nouveaux arcs
+\\
+- On tire uniformément la direction des arcs vers les sommets ayant la note la plus élévée à l'itération du mois précedent (premier pour-mille).
+\\
+\\
+A partir de cette nouvelle matrice, on effectue les deux méthodes d'initialisation et on compare le nombre d'itérations obtenu.
+\\
+Les graphiques suivants montrent l'accélération observée sur différents graphes du web, en faisant varier le nombre de nouveaux arcs/sommets et le paramètre $\alpha$ de la matrice $G$ de PageRank :
+\\
+Graphe India :
+\\
+Graphe web-edu :
+\\
+Graphe Wikipedia :
+\\
+Graphe Stanford :
+\\
+Graphe web-cs-stanford :
+\\
+Graphe Stanford-Berkeley :
+\\
+On remarque que dans tous les graphes, plus la modification du graphe est faible plus l'accélération de convergence est forte pour cette méthode.
+Si l'on modifie trop le graphe, le vecteur de notes du mois précedent ne sera plus pertinent et n'accelerera plus la convergence.
+L'influence sur l'accélération semble dépendre aussi sur la forme du graphe, une étude du graphe India pourrait expliquer pourquoi la méthode produit une accélération moins importante que sur les autres graphes.
+\end{document}
